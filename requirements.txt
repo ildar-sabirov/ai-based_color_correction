@@ -1,0 +1,2 @@
+streamlit==1.29.0
+python-color-transfer==0.1.2a0
