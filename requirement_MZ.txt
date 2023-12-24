@@ -1,0 +1,10 @@
+opencv-python             
+pandas
+pillow
+scikit-image
+scikit-learn
+scikit-learn-intelex
+scipy 
+python-color-transfer
+streamlit
+pytorch
