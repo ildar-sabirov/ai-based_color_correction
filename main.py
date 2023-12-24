@@ -41,7 +41,6 @@ def process_image(img_data, ref_image):
     # Применение CLAHE к каждому каналу
     img_arr_mt_clahe = clahe_image(img_arr_mt)
 
-    st.write('**Результат коррекции с применением CLAHE к каждому каналу RGB:**')
     ss.win2.image(cv2.cvtColor(img_arr_mt_clahe, cv2.COLOR_BGR2RGB), use_column_width=True)
 
 
@@ -78,7 +77,6 @@ def main():
     st.header('**Результат коррекции:**')
     win1 = st.empty()
     ss.win2 = st.empty()
-    btn = st.button('Обновить результат')
 
     if (img_arr_in is not None) and (img_arr_ref is not None):
         if "image" in img_arr_in.type:
