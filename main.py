@@ -1,4 +1,3 @@
-import os
 import tempfile
 import streamlit as st
 import numpy as np
@@ -7,19 +6,16 @@ import cv2
 from python_color_transfer.color_transfer import ColorTransfer
 
 ss = st.session_state
-# Создаем CLAHE
 ss.clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
 
 
 def clahe_image(img):
     # Разделяем изображение на каналы
     b, g, r = cv2.split(img)
-
     # Применяем CLAHE к каждому каналу
     b_clahe = ss.clahe.apply(b)
     g_clahe = ss.clahe.apply(g)
     r_clahe = ss.clahe.apply(r)
-
     # Объединяем каналы обратно
     img_clahe = cv2.merge([b_clahe, g_clahe, r_clahe])
 
@@ -27,7 +23,7 @@ def clahe_image(img):
 
 
 def load_file(label, file_types):
-    uploaded_file = st.sidebar.file_uploader(label=f'**{label}:**', type=file_types)
+    uploaded_file = st.sidebar.file_uploader(label=f'{label}:', type=file_types)
     return uploaded_file
 
 
@@ -41,7 +37,9 @@ def process_image(img_data, ref_image):
     # Применение CLAHE к каждому каналу
     img_arr_mt_clahe = clahe_image(img_arr_mt)
 
-    ss.win2.image(cv2.cvtColor(img_arr_mt_clahe, cv2.COLOR_BGR2RGB), use_column_width=True)
+    ss.win2.image(
+        cv2.cvtColor(img_arr_mt_clahe, cv2.COLOR_BGR2RGB), use_column_width=True
+    )
 
 
 def load_video(video_data):
@@ -54,18 +52,13 @@ def load_video(video_data):
 
 
 def process_video(video, ref_image):
-    # Будем перебирать кадры из видео
     while True:
         # Читаем кадр из видео
         ret, frame = video.read()
         # Если кадр не удалось прочитать, выходим из цикла
         if not ret:
             break
-        # Обрабатываем кадр
-        processed_frame = process_image(frame, ref_image)
-        # Отображаем результат
-        if not ret:
-            break
+        process_image(frame, ref_image)
 
 
 def main():
@@ -74,7 +67,7 @@ def main():
     img_arr_ref = load_file('Выберите изображение референс', ext_img)
     img_arr_in = load_file('Выберите изображение или видео', ext_img + ext_vid)
 
-    st.header('**Результат коррекции:**')
+    st.header('Результат коррекции:')
     win1 = st.empty()
     ss.win2 = st.empty()
 
@@ -91,5 +84,5 @@ def main():
             process_video(video, img_arr_ref)
 
 
-if __name__ == '__main__':
+if name == 'main':
     main()
