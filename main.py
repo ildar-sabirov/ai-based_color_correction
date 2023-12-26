@@ -84,5 +84,5 @@ def main():
             process_video(video, img_arr_ref)
 
 
-if name == 'main':
+if __name__ == 'main':
     main()
